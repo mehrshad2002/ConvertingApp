@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Service;
 using Classes;
 
 
@@ -29,6 +30,8 @@ namespace ConvertingApp.AppForm
 
         private void btnSelectFile_Click(object sender, EventArgs e)
         {
+            Servic servic = new Servic();
+
             openFileDialogSelect.Multiselect = false;
             if (openFileDialogSelect.ShowDialog() == DialogResult.OK)
             {
@@ -38,6 +41,18 @@ namespace ConvertingApp.AppForm
                 ValidationFileFormat vff = new ValidationFileFormat(filePath , FileName);
                 bool Result = vff.Validation();
                 textBoxFilePath.Text = filePath;
+
+                if (Result)
+                {
+                    // we should read file from here and then
+                    // we analyz file and data 
+                    MessageBox.Show("Thats Correct Format");
+                }
+                else
+                {
+                    MessageBox.Show($"Your File Format Should Be {FileName.ToUpper()} .\nTry Again.");
+                    textBoxFilePath.ResetText();
+                }
             }
         }
 

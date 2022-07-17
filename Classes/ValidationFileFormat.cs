@@ -21,7 +21,14 @@ namespace Classes
         {
             FileInfo fileInfo = new FileInfo(Path);
             var ext = fileInfo.Extension;
-            return true;
+            if (ext == FileName)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

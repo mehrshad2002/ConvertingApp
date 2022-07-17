@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Classes\Classes.csproj" />
+    <ProjectReference Include="..\Service\Service.csproj" />
   </ItemGroup>
 
 </Project>

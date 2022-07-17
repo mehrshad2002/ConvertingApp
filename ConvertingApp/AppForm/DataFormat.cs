@@ -31,7 +31,7 @@ namespace ConvertingApp.AppForm
             {
                 MessageBox.Show("Excel");
                 ImportData importData = new ImportData();
-                importData.FileName = "xlsx";
+                importData.FileName = ".xlsx";
                 this.Close();
                 importData.Show();
             }

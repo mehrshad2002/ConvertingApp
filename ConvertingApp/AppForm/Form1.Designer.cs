@@ -65,9 +65,9 @@
             this.textBox1.Location = new System.Drawing.Point(465, 224);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(456, 313);
+            this.textBox1.Size = new System.Drawing.Size(406, 313);
             this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "Welcome\r\nTo\r\nWind";
+            this.textBox1.Text = "\r\nWind";
             // 
             // FmWelcome
             // 
