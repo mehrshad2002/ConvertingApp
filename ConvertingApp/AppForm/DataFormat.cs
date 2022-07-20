@@ -17,11 +17,6 @@ namespace ConvertingApp.AppForm
         public DataFormat()
         {
             InitializeComponent();
-            RadioButton radio = new RadioButton();
-            radio.Checked = true;
-
-
-
         }
 
 
@@ -29,7 +24,6 @@ namespace ConvertingApp.AppForm
         {
             if (radioExcel.Checked)
             {
-                MessageBox.Show("Excel");
                 ImportData importData = new ImportData();
                 importData.FileName = ".xlsx";
                 this.Close();
@@ -37,7 +31,8 @@ namespace ConvertingApp.AppForm
             }
             else if (radioWord.Checked)
             {
-                MessageBox.Show("Word");
+                MessageBox.Show("We working on it !");
+                radioExcel.Checked = false;
             }
         }
 

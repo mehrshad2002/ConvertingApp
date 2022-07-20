@@ -30,8 +30,6 @@ namespace ConvertingApp.AppForm
 
         private void btnSelectFile_Click(object sender, EventArgs e)
         {
-            Servic servic = new Servic();
-
             openFileDialogSelect.Multiselect = false;
             if (openFileDialogSelect.ShowDialog() == DialogResult.OK)
             {
@@ -42,13 +40,7 @@ namespace ConvertingApp.AppForm
                 bool Result = vff.Validation();
                 textBoxFilePath.Text = filePath;
 
-                if (Result)
-                {
-                    // we should read file from here and then
-                    // we analyz file and data 
-                    MessageBox.Show("Thats Correct Format");
-                }
-                else
+                if (!Result)
                 {
                     MessageBox.Show($"Your File Format Should Be {FileName.ToUpper()} .\nTry Again.");
                     textBoxFilePath.ResetText();
@@ -58,7 +50,12 @@ namespace ConvertingApp.AppForm
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-
+            string FilePath = openFileDialogSelect.FileName;
+            TargetFormat targetFormat = new TargetFormat();
+            targetFormat.FirtFileFormat = FilePath;
+            int i = 0;
+            this.Close();
+            targetFormat.Show();
         }
     }
 }
