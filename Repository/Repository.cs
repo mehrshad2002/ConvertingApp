@@ -19,7 +19,6 @@ namespace Repository
             {
                 Columnname cName = new Columnname();
                 cName.Name = column.ColumnName;
-                cName.ID = id++;
                 columns.Add(cName);
             }
             return columns;

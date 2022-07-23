@@ -58,7 +58,7 @@
             // 
             this.rbExcel.AutoSize = true;
             this.rbExcel.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.rbExcel.Location = new System.Drawing.Point(157, 106);
+            this.rbExcel.Location = new System.Drawing.Point(676, 344);
             this.rbExcel.Name = "rbExcel";
             this.rbExcel.Size = new System.Drawing.Size(116, 49);
             this.rbExcel.TabIndex = 2;
@@ -70,7 +70,7 @@
             // 
             this.rbWord.AutoSize = true;
             this.rbWord.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.rbWord.Location = new System.Drawing.Point(157, 161);
+            this.rbWord.Location = new System.Drawing.Point(676, 279);
             this.rbWord.Name = "rbWord";
             this.rbWord.Size = new System.Drawing.Size(123, 49);
             this.rbWord.TabIndex = 3;

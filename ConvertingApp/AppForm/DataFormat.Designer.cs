@@ -36,7 +36,7 @@
             // 
             // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(453, 417);
+            this.btnNext.Location = new System.Drawing.Point(826, 499);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(159, 61);
             this.btnNext.TabIndex = 1;
@@ -48,7 +48,7 @@
             // 
             this.radioExcel.AutoSize = true;
             this.radioExcel.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.radioExcel.Location = new System.Drawing.Point(170, 117);
+            this.radioExcel.Location = new System.Drawing.Point(826, 345);
             this.radioExcel.Name = "radioExcel";
             this.radioExcel.Size = new System.Drawing.Size(127, 52);
             this.radioExcel.TabIndex = 2;
@@ -60,7 +60,7 @@
             // 
             this.radioWord.AutoSize = true;
             this.radioWord.Font = new System.Drawing.Font("Segoe UI Semibold", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.radioWord.Location = new System.Drawing.Point(170, 175);
+            this.radioWord.Location = new System.Drawing.Point(826, 403);
             this.radioWord.Name = "radioWord";
             this.radioWord.Size = new System.Drawing.Size(125, 49);
             this.radioWord.TabIndex = 3;
@@ -70,7 +70,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(453, 499);
+            this.btnCancel.Location = new System.Drawing.Point(644, 499);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(159, 61);
             this.btnCancel.TabIndex = 4;
