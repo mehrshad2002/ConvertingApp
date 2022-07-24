@@ -59,15 +59,18 @@
             // Newdg
             // 
             this.Newdg.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.Newdg.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.Newdg.BackgroundColor = System.Drawing.SystemColors.Control;
             this.Newdg.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Newdg.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Targets,
             this.Origins});
+            this.Newdg.GridColor = System.Drawing.SystemColors.Control;
             this.Newdg.Location = new System.Drawing.Point(206, 172);
             this.Newdg.Name = "Newdg";
             this.Newdg.RowHeadersWidth = 62;
             this.Newdg.RowTemplate.Height = 33;
-            this.Newdg.Size = new System.Drawing.Size(721, 181);
+            this.Newdg.Size = new System.Drawing.Size(721, 318);
             this.Newdg.TabIndex = 4;
             // 
             // Targets

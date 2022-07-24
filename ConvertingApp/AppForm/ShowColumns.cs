@@ -128,10 +128,10 @@ namespace ConvertingApp.AppForm
                 }
                 else
                 {
-                    map.Old = Row.Cells[0].Value.ToString();
-                    map.New = Row.Cells[1].Value.ToString();
+                    map.TargetV = Row.Cells[0].Value.ToString();
+                    map.OriginV = Row.Cells[1].Value.ToString();
 
-                    if(map.Old == "...")
+                    if(map.TargetV == "...")
                     {
                         continue;
                     }
@@ -143,7 +143,13 @@ namespace ConvertingApp.AppForm
             }
 
             bool Result = service.Reader(Maps , OriginPath , TargetPath );
-            int i = 0;
+            if (Result)
+            {
+                MessageBox.Show("Every Things\nGood And Save");
+                End end = new End();
+                end.Show();
+                this.Close();
+            }
         }
 
         private void dgColumns_CellContentClick(object sender, DataGridViewCellEventArgs e)

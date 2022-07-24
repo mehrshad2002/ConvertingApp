@@ -8,7 +8,7 @@ namespace Classes
 {
     public class MapClass
     {
-        public string Old { get; set; }
-        public string New { get; set; }
+        public string TargetV { get; set; }
+        public string OriginV { get; set; }
     }
 }

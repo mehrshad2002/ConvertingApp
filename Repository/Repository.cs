@@ -2,12 +2,26 @@
 using System.Linq;
 using Classes;
 using System.Data;
-using Microsoft.Office.Interop.Excel;
+using Aspose;
 
 namespace Repository
 {
     public class Repository
     {
+
+        public void ExportExcell(string jsonInput)
+        {
+            var workbook = new Aspose.Cells.Workbook();
+            var worksheet = workbook.Worksheets[0];
+
+            var option = new Aspose.Cells.Utility.JsonLayoutOptions();
+            option.ArrayAsTable = true;
+
+            Aspose.Cells.Utility.JsonUtility.ImportData(jsonInput, worksheet.Cells, 0, 0, option);
+
+            workbook.Save("output.xls" , Aspose.Cells.SaveFormat.Auto);
+
+        }
         public List<Columnname> ReadColumn(string filePath)
         {
             WorkBook workBook = WorkBook.Load($@"{filePath}");
@@ -25,7 +39,7 @@ namespace Repository
             return columns;
         }
 
-        public bool Reader(List<MapClass> maps , string TargetPath, string OriginPath )
+        public bool Reader(List<MapClass> maps, string TargetPath, string OriginPath)
         {
             // Target
             WorkBook targetFile = WorkBook.Load($@"{TargetPath}");
@@ -37,51 +51,57 @@ namespace Repository
             WorkSheet Osheet = originFile.WorkSheets.First();
             var dataTableOrigin = Osheet.ToDataTable(true);
 
-            TargetVal targetVal = new TargetVal();
+
 
 
             List<TargetVal> Rows = new List<TargetVal>();
             foreach (DataRow Row in dataTableOrigin.Rows)
             {
-                foreach( MapClass map in maps)
+                TargetVal targetVal = new TargetVal();
+                foreach (MapClass map in maps)
                 {
-                    if(map.Old == "Name")
+                    // 
+                    if (map.TargetV == "Name")
                     {
-                        targetVal.Name = Convert.ToString(Row[$"{map.New}"]);
-                    }else if(map.Old == "ID")
-                    {
-                        targetVal.ID = Convert.ToString(Row[$"{map.New}"]);
+                        targetVal.Name = Convert.ToString(Row[$"{map.OriginV}"]);
                     }
-                    else if(map.Old == "Age")
+                    else if (map.TargetV == "ID")
                     {
-                        targetVal.Age = Convert.ToString(Row[$"{map.New}"]);
+                        targetVal.ID = Convert.ToString(Row[$"{map.OriginV}"]);
                     }
-                    else if(map.Old == "Gender")
+                    else if (map.TargetV == "Age")
                     {
-                        targetVal.Gender = Convert.ToString(Row[$"{map.New}"]);
+                        targetVal.Age = Convert.ToString(Row[$"{map.OriginV}"]);
+                    }
+                    else if (map.TargetV == "Gender")
+                    {
+                        targetVal.Gender = Convert.ToString(Row[$"{map.OriginV}"]);
                     }
                 }
+                // True 
                 Rows.Add(targetVal);
-                int i = 0;
             }
 
-            foreach( TargetVal targetVal1 in Rows)
+
+            int OriginCounter = Osheet.Rows.Count();
+            int i = 2;
+            foreach (TargetVal targetVal1 in Rows)
             {
-                foreach(DataRow dataRow in dataTableOrigin.Rows)
+                while (true)
                 {
-                    dataRow["Name"] = targetVal1.Name;
-                    dataRow["ID"] = targetVal1.ID;
-                    dataRow["Age"] = targetVal1.Age;
-                    dataRow["Gender"] = targetVal1.Gender;
-                    int ii = 0;
-                    targetFile.WorkSheets.First().ToDataTable(true).Rows.Add(dataRow);
+                    Tsheet[$"A{i}"].Value = targetVal1.ID;
+                    Tsheet[$"B{i}"].Value = targetVal1.Name;
+                    Tsheet[$"C{i}"].Value = targetVal1.Gender;
+                    Tsheet[$"D{i}"].Value = targetVal1.Age;
+                    ++i;
+                    break;
                 }
             }
             targetFile.SaveAs($@"{TargetPath}");
             return true;
         }
-        public static void TargetWriter(string TargetPath,  string OriginPath , MapClass map)
-         {
+        public static void TargetWriter(string TargetPath, string OriginPath, MapClass map)
+        {
             // open excel file 
             WorkBook targetFile = WorkBook.Load($@"{TargetPath}");
 
@@ -97,14 +117,14 @@ namespace Repository
 
             foreach (DataRow Row in Tsheet.ToDataTable(true).Rows)
             {
-                OriginReader(OriginPath , map , targetVal );
+                OriginReader(OriginPath, map, targetVal);
             }
             Tsheet.ToDataTable(true).Rows.Add();
 
             // save file
-         }
+        }
 
-        public bool WtiteFile(MapClass map , string OriginPath , string TargetPath)
+        public bool WtiteFile(MapClass map, string OriginPath, string TargetPath)
         {
             WorkBook originFile = WorkBook.Load($@"{OriginPath}");
 
@@ -121,7 +141,7 @@ namespace Repository
             foreach (DataRow row in dataTableOrigin.Rows)
             {
                 TargetVal item = new TargetVal();
-                item.Name = row[$"{map.New}"].ToString();
+                item.Name = row[$"{map.OriginV}"].ToString();
 
                 Data.Add(item);
             }
