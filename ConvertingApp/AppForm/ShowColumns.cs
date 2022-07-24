@@ -10,20 +10,30 @@ using System.Windows.Forms;
 using Service;
 using Classes;
 
+
 namespace ConvertingApp.AppForm
 {
     public partial class ShowColumns : Form
     {
         public static string origin;
         public static string target;
+        public static string OriginPath;
+        public static string TargetPath;
+        public static Target t ;
+        public static Origin o ;
+
+
+
 
         public List<Columnname> OriginColumns = new List<Columnname>();
         public List<Columnname> TargetColumns = new List<Columnname>();
-        public ShowColumns( List<Columnname> Opath , List<Columnname> Tpath )
+        public ShowColumns( List<Columnname> originCol , List<Columnname> targetcOL , string Opath , string Tpath)
         {
             InitializeComponent();
-            OriginColumns = Opath;
-            TargetColumns = Tpath;
+            OriginColumns = originCol;
+            TargetColumns = targetcOL;
+            TargetPath = Tpath;
+            OriginPath = Opath;
 
             CreateTextBox();
         }
@@ -37,7 +47,6 @@ namespace ConvertingApp.AppForm
                 foreach (Columnname colTarget in TargetColumns)
                 {
                     comboCell.Items.Add(colTarget.Name);
-                    //comboCell.Value = colTarget.Name;
                 }
 
                 if (TargetColumns.Exists(i=>i.Name == col.Name) )
@@ -77,30 +86,10 @@ namespace ConvertingApp.AppForm
             row.Cells.Add(comboCell2);
 
             Newdg.Rows.Add(row);
-             
-            
-
-            //foreach( Columnname col in OriginColumns)
-            //{
-            //    originColumn.Value = col.Name;
-            //}
-            //comboCell.Items.Add("ID");
-            //comboCell.Items.Add("Name");
-            //comboCell.Items.Add("mehrshad");
-            //comboCell.Value = "mehrshad";
-            //var comboCell2 = new DataGridViewComboBoxCell();
-            //comboCell2.Items.Add("ID");
-            //comboCell2.Items.Add("Name");
-            //comboCell2.Items.Add("mehrshad");
-            //comboCell2.Value = "mehrshad";
-            //row.Cells.Add(comboCell2);
         }
 
         private void LoadDataGrid()
         {
-            //Newdg.DataSource = OriginColumns;
-
-
             foreach (Columnname col in TargetColumns)
             {
                 //Target.Items.Add(new { col.Name });
@@ -114,22 +103,6 @@ namespace ConvertingApp.AppForm
                 Origins.ToolTipText = col.Name;
                 
             }
-
-            //foreach ( Columnname col in OriginColumns)
-            //{
-            //    Origin.Items.Add(new {col.Name });
-            //} 
-
-            //Newdg.DataSource = OriginColumns;
-
-            //List<int> ListID = new List<int>();
-
-            //foreach( Columnname col in OriginColumns)
-            //{
-            //    ListID.Add(col.ID);
-            //}
-
-            //dgNew.DataSource = ListID ;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -141,52 +114,40 @@ namespace ConvertingApp.AppForm
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            int counter = 0;
-            foreach(DataGridViewRow Row in Newdg.Rows)
-            {
-                foreach(DataGridViewCell cell in Row.Cells)
-                {
-                    if(counter % 2 == 0)
-                    {
-                        target = cell.Value.ToString();
+            Servic service = new Servic();
+            Dictionary<string,string> Mapp = new Dictionary<string,string>();
+            List<MapClass> Maps = new List<MapClass>();
 
+            foreach (DataGridViewRow Row in Newdg.Rows)
+            {
+                int b = 0;
+                MapClass map = new MapClass();
+                if(Row.Cells[0].Value == null)
+                {
+                    continue;
+                }
+                else
+                {
+                    map.Old = Row.Cells[0].Value.ToString();
+                    map.New = Row.Cells[1].Value.ToString();
+
+                    if(map.Old == "...")
+                    {
+                        continue;
                     }
                     else
                     {
-                        origin = cell.Value.ToString();
-                    }
-                    ++counter;
-                    if(counter % 2 == 0 && counter > 1)
-                    {
-                        //WriteFile();
+                        Maps.Add(map);
                     }
                 }
             }
-            //foreach (DataGridViewRow item in Newdg.Rows)
-            //{
-            //    foreach (var cell in item.Cells)
-            //    {
-            //        if (cell.GetType() == typeof(DataGridViewComboBoxCell) )
-            //        {
-            //            var mycell = (DataGridViewComboBoxCell)cell;
-            //            mycell.Value = "ID";
-                        
-            //            //mycell.FormattedValue = "ID";
-            //            //mycell.EditedFormattedValue = "ID";
-            //        }
-            //    }
 
-            //    var items = item;
-            //}
+            bool Result = service.Reader(Maps , OriginPath , TargetPath );
+            int i = 0;
         }
 
         private void dgColumns_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.ColumnIndex == 1)
-            {
-                var x = dgNew.Rows[e.RowIndex];
-                int i = 0;
-            }
         }
 
         private void ShowColumns_Load(object sender, EventArgs e)

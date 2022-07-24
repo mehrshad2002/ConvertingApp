@@ -12,5 +12,15 @@
         {
             return repository.ReadColumn(filePath);
         }
+
+        public bool WriteFile(MapClass map, string originPath, string targetPath)
+        {
+            return repository.WtiteFile(map, originPath, targetPath);
+        }
+
+        public bool Reader(List<MapClass> maps , string Opath , string Tpath)
+        {
+            return repository.Reader(maps, Tpath , Opath );
+        }
     }
 }

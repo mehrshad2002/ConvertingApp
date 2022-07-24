@@ -41,7 +41,7 @@ namespace ConvertingApp.AppForm
                 List<Columnname> Columnstarget = service.ReadColumn(FilePath);
 
                 // in showColumns we need 2 filed for getting columns data
-                ShowColumns showColumns = new ShowColumns(columnsOrigin , Columnstarget);
+                ShowColumns showColumns = new ShowColumns(columnsOrigin, Columnstarget, FirstFilePath, FilePath);
 
                 this.Close();
                 showColumns.Show();
