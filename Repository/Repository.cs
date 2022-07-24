@@ -22,6 +22,49 @@ namespace Repository
             workbook.Save("output.xls" , Aspose.Cells.SaveFormat.Auto);
 
         }
+
+        public bool ReadExcel(string Opath, string targetPath , List<MapClass> maps)
+        {
+            DataTable dt = new DataTable();
+            Aspose.Cells.Workbook orginWorkbook = new Aspose.Cells.Workbook($@"{Opath}");
+            Aspose.Cells.Worksheet orginWorkSheet = orginWorkbook.Worksheets[0];
+            dt = orginWorkSheet.Cells.ExportDataTable(0, 0, 5, 5,true);
+
+            for( int k = 0; k < dt.Rows.Count; k++)
+            {
+                for(int h = 0; h < dt.Columns.Count; h++)
+                {
+                    var item = dt.Rows[k][h].ToString();
+                    int i = 0;  
+                }
+            }
+
+
+            DataTable result = new DataTable();
+            Aspose.Cells.Workbook targetWorkbook = new Aspose.Cells.Workbook($@"{targetPath}");
+            Aspose.Cells.Worksheet targetWorksheet = targetWorkbook.Worksheets[0];
+            var totalColumn = targetWorksheet.Cells.Count;
+            result = targetWorksheet.Cells.ExportDataTable(0, 0, 5, totalColumn, true);
+
+
+            int counter = 0;
+            foreach (DataRow item in dt.Rows)
+            {                 
+                foreach (MapClass map in maps)
+                {
+                    result.Rows[counter][map.TargetV] = item[map.OriginV];
+                }
+                counter++;
+            }
+
+            var option = new Aspose.Cells.ImportTableOptions();
+            targetWorksheet.Cells.ImportData(result, 0, 0, option);
+            targetWorkbook.Save($@"C:\Users\micro\Desktop\New folder\output.xls");
+
+
+
+            return true;
+        }
         public List<Columnname> ReadColumn(string filePath)
         {
             WorkBook workBook = WorkBook.Load($@"{filePath}");
@@ -52,38 +95,43 @@ namespace Repository
             var dataTableOrigin = Osheet.ToDataTable(true);
 
 
-
-
             List<TargetVal> Rows = new List<TargetVal>();
+            int counter = 0;
+
+            List<string> Value = new List<string>();
             foreach (DataRow Row in dataTableOrigin.Rows)
             {
                 TargetVal targetVal = new TargetVal();
                 foreach (MapClass map in maps)
                 {
-                    // 
-                    if (map.TargetV == "Name")
-                    {
-                        targetVal.Name = Convert.ToString(Row[$"{map.OriginV}"]);
-                    }
-                    else if (map.TargetV == "ID")
-                    {
-                        targetVal.ID = Convert.ToString(Row[$"{map.OriginV}"]);
-                    }
-                    else if (map.TargetV == "Age")
-                    {
-                        targetVal.Age = Convert.ToString(Row[$"{map.OriginV}"]);
-                    }
-                    else if (map.TargetV == "Gender")
-                    {
-                        targetVal.Gender = Convert.ToString(Row[$"{map.OriginV}"]);
-                    }
+                    Value.Add(map.OriginV);
                 }
-                // True 
                 Rows.Add(targetVal);
+                counter++;
             }
+
+            int l = 1;
+            int j = 1;
+
+            int OriginCounter1 = Osheet.Rows.Count();
+            int OriginCounterX1 = Tsheet.Columns.Count();
+            int k = 0;
+
+            for (; l < OriginCounter1; ++l)
+            {
+                for (; j < OriginCounterX1; ++j)
+                {
+                    Tsheet.ToDataTable(true).Rows[l][j] = Convert.ToString(Value[k++]);
+                }
+            }
+            targetFile.SaveAs($@"{TargetPath}");
+            return true;
+
+
 
 
             int OriginCounter = Osheet.Rows.Count();
+            int OriginCounterX = Osheet.Columns.Count();
             int i = 2;
             foreach (TargetVal targetVal1 in Rows)
             {
@@ -97,9 +145,8 @@ namespace Repository
                     break;
                 }
             }
-            targetFile.SaveAs($@"{TargetPath}");
-            return true;
         }
+
         public static void TargetWriter(string TargetPath, string OriginPath, MapClass map)
         {
             // open excel file 

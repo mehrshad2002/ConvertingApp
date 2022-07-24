@@ -142,7 +142,7 @@ namespace ConvertingApp.AppForm
                 }
             }
 
-            bool Result = service.Reader(Maps , OriginPath , TargetPath );
+            bool Result = service.ReadExcel(Maps , OriginPath , TargetPath );
             if (Result)
             {
                 MessageBox.Show("Every Things\nGood And Save");

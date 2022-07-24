@@ -22,5 +22,10 @@
         {
             return repository.Reader(maps, Tpath , Opath );
         }
+
+        public bool ReadExcel(List<MapClass> maps, string originPath, string targetPath)
+        {
+            return repository.ReadExcel(originPath, targetPath, maps);
+        }
     }
 }
